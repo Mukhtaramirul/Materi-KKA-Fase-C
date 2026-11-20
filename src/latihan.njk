@@ -1,0 +1,26 @@
+---
+layout: halaman.njk
+title: Latihan Soal
+description: "Latihan soal KKA Fase C untuk kelas 5 dan kelas 6 MI dalam bentuk Google Form."
+permalink: /latihan/
+---
+<p class="pengantar">Pilih latihan sesuai kelasmu. Soal akan terbuka di Google Form. Jangan lupa tulis nama dan kelasmu dengan benar, ya!</p>
+
+{% for grup in latihan %}
+<section class="grup-latihan">
+  <h2 class="title-medium">{{ grup.kelas }}</h2>
+  <ul class="daftar-latihan">
+    {% for s in grup.soal %}
+    {% set ulangan = "Ulangan" in s.judul %}
+    <li>
+      <span class="avatar{% if ulangan %} avatar-tersier{% endif %}"><span class="ikon">{{ "quiz" if ulangan else "assignment" }}</span></span>
+      <span class="latihan-teks">
+        <span class="latihan-judul">{{ s.judul }}</span>
+        <span class="latihan-sub">{{ "Ulangan harian" if ulangan else "Latihan" }} · Google Form</span>
+      </span>
+      <a class="tombol tombol-tonal" href="{{ s.link }}" target="_blank" rel="noopener">Kerjakan<span class="ikon">open_in_new</span></a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}

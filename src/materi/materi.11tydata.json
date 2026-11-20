@@ -1,0 +1,9 @@
+{
+  "layout": "materi.njk",
+  "tags": "materi",
+  "permalink": "/materi/bab-{{ bab }}/",
+  "eleventyComputed": {
+    "title": "Bab {{ bab }}: {{ judul }}",
+    "description": "Materi KKA Fase C Bab {{ bab }}: {{ judul }}. {{ tujuan }}"
+  }
+}

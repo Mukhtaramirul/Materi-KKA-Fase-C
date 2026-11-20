@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% set judulHalaman = (title + " – " + site.title) if title else site.title %}
+  <title>{{ judulHalaman }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="canonical" href="{{ page.url | htmlBaseUrl(site.url) }}">
+  <meta property="og:title" content="{{ judulHalaman }}">
+  <meta property="og:description" content="{{ description or site.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:url" content="{{ page.url | htmlBaseUrl(site.url) }}">
+  <meta property="og:image" content="{{ '/assets/img/pratinjau.jpg' | htmlBaseUrl(site.url) }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f8f9ff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111418" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/img/ikon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&icon_names=abc,arrow_back,arrow_forward,assignment,chevron_right,download,edit_note,expand_more,flag,home,lightbulb,menu_book,open_in_new,quiz&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+{% set diBeranda = page.url == "/" or "/materi/" in page.url %}
+<body>
+  <header class="app-bar">
+    <a class="app-bar-judul" href="/">
+      <img src="/assets/img/ikon.svg" alt="" width="32" height="32">
+      <span>Materi KKA Fase C</span>
+    </a>
+  </header>
+
+  <nav class="navigasi" aria-label="Menu utama">
+    <a href="/" class="nav-item"{% if diBeranda %} aria-current="page"{% endif %}>
+      <span class="nav-indikator"><span class="ikon">home</span></span>
+      <span class="nav-label">Beranda</span>
+    </a>
+    <a href="/latihan/" class="nav-item"{% if page.url == "/latihan/" %} aria-current="page"{% endif %}>
+      <span class="nav-indikator"><span class="ikon">edit_note</span></span>
+      <span class="nav-label">Latihan</span>
+    </a>
+    <a href="/glosarium/" class="nav-item"{% if page.url == "/glosarium/" %} aria-current="page"{% endif %}>
+      <span class="nav-indikator"><span class="ikon">abc</span></span>
+      <span class="nav-label">Glosarium</span>
+    </a>
+  </nav>
+
+  <main class="konten">
+    {{ content | safe }}
+    <footer class="kaki">
+      Materi KKA Fase C · Koding dan Kecerdasan Artifisial untuk Kelas 5 dan 6
+    </footer>
+  </main>
+</body>
+</html>

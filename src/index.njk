@@ -1,0 +1,44 @@
+---
+layout: base.njk
+permalink: /
+---
+<section class="sambutan">
+  <p class="label">Koding dan Kecerdasan Artifisial · Kelas 5 dan 6</p>
+  <h1 class="display">Materi KKA Fase C</h1>
+  <p class="sambutan-teks">Ayo belajar koding dan kecerdasan artifisial! Baca materinya di sini, unduh PDF-nya, lalu uji pemahamanmu lewat latihan soal.</p>
+  <div class="grup-tombol">
+    <a class="tombol tombol-filled" href="#materi"><span class="ikon">menu_book</span>Mulai belajar</a>
+    <a class="tombol tombol-tonal" href="/latihan/"><span class="ikon">edit_note</span>Latihan soal</a>
+    <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
+  </div>
+</section>
+
+<section id="materi" class="bagian">
+  <h2 class="title-large">Daftar Materi</h2>
+  <ol class="daftar-bab">
+    {% for item in collections.bab %}
+    <li>
+      <a class="kartu-bab" href="{{ item.url }}">
+        <span class="avatar bab-{{ item.data.bab }}">{{ item.data.bab }}</span>
+        <span class="kartu-bab-teks">
+          <span class="label">Bab {{ item.data.bab }}</span>
+          <span class="kartu-bab-judul">{{ item.data.judul }}</span>
+          {% if item.data.subjudul %}<span class="kartu-bab-sub">{{ item.data.subjudul }}</span>{% endif %}
+        </span>
+        <span class="ikon kartu-bab-panah">chevron_right</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="bagian pintasan">
+  <a class="kartu-pintas" href="/latihan/">
+    <span class="ikon">edit_note</span>
+    <span><strong>Latihan Soal</strong>Kerjakan soal sesuai kelasmu lewat Google Form.</span>
+  </a>
+  <a class="kartu-pintas" href="/glosarium/">
+    <span class="ikon">abc</span>
+    <span><strong>Glosarium</strong>Lupa arti sebuah istilah? Cari di sini.</span>
+  </a>
+</section>

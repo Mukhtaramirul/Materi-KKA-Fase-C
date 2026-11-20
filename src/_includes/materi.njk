@@ -1,0 +1,54 @@
+---
+layout: base.njk
+---
+<article class="halaman materi">
+  <a class="tombol tombol-teks kembali" href="/"><span class="ikon">arrow_back</span>Daftar materi</a>
+
+  <header class="materi-kepala">
+    <span class="chip bab-{{ bab }}">Bab {{ bab }}</span>
+    <h1 class="headline">{{ judul }}</h1>
+    {% if subjudul %}<p class="subjudul">{{ subjudul }}</p>{% endif %}
+  </header>
+
+  {% if tujuan %}
+  <div class="kartu-info kartu-tujuan">
+    <span class="ikon">flag</span>
+    <div>
+      <p class="kartu-info-judul">Yang akan kamu pelajari</p>
+      <p>{{ tujuan }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="isi">
+    {{ content | safe }}
+  </div>
+
+  <section class="aksi">
+    <h2>Sudah selesai membaca?</h2>
+    <p>Uji pemahamanmu lewat latihan soal, atau simpan materinya untuk dibaca lagi.</p>
+    <div class="grup-tombol">
+      <a class="tombol tombol-filled" href="/latihan/"><span class="ikon">edit_note</span>Kerjakan latihan soal</a>
+      <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
+    </div>
+  </section>
+
+  <nav class="sebelum-sesudah" aria-label="Bab lain">
+    {% for item in collections.bab %}
+      {% if item.data.bab == bab - 1 %}
+      <a class="kartu-nav sebelum" href="{{ item.url }}">
+        <span class="ikon">arrow_back</span>
+        <span><small>Bab sebelumnya</small>{{ item.data.judul }}</span>
+      </a>
+      {% endif %}
+    {% endfor %}
+    {% for item in collections.bab %}
+      {% if item.data.bab == bab + 1 %}
+      <a class="kartu-nav sesudah" href="{{ item.url }}">
+        <span><small>Bab berikutnya</small>{{ item.data.judul }}</span>
+        <span class="ikon">arrow_forward</span>
+      </a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+</article>
