@@ -1,6 +1,7 @@
 {
   "layout": "materi.njk",
   "tags": "materi",
+  "modeBelajar": true,
   "permalink": "/materi/bab-{{ bab }}/",
   "eleventyComputed": {
     "title": "Bab {{ bab }}: {{ judul }}",

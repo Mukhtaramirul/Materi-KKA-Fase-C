@@ -1,44 +1,103 @@
 ---
 layout: base.njk
 permalink: /
+eleventyImport:
+  collections: ["bab"]
 ---
-<section class="sambutan">
-  <p class="label">Koding dan Kecerdasan Artifisial · Kelas 5 dan 6</p>
-  <h1 class="display">Materi KKA Fase C</h1>
-  <p class="sambutan-teks">Ayo belajar koding dan kecerdasan artifisial! Baca materinya di sini, unduh PDF-nya, lalu uji pemahamanmu lewat latihan soal.</p>
-  <div class="grup-tombol">
-    <a class="tombol tombol-filled" href="#materi"><span class="ikon">menu_book</span>Mulai belajar</a>
-    <a class="tombol tombol-tonal" href="/latihan/"><span class="ikon">edit_note</span>Latihan soal</a>
-    <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
+{% set total = collections.bab.length %}
+<section class="kelas-hero">
+  <div class="kelas-hero-utama">
+    <p class="label">Kelas · Koding dan Kecerdasan Artifisial</p>
+    <h1 class="display">Materi KKA Fase C</h1>
+    <p class="kelas-hero-teks">Belajar mengenal koding, berpikir komputasional, Scratch, dan kecerdasan artifisial lewat cerita, contoh sehari-hari, dan aktivitas seru.</p>
+
+    <ul class="statistik">
+      <li><span class="ikon">signal_cellular_alt</span><span><small>Level</small>Dasar</span></li>
+      <li><span class="ikon">schedule</span><span><small>Total belajar</small>± {{ collections.bab | totalMenit }} menit</span></li>
+      <li><span class="ikon">menu_book</span><span><small>Materi</small>{{ total }} bab</span></li>
+      <li><span class="ikon">school</span><span><small>Untuk</small>Kelas 5 &amp; 6</span></li>
+    </ul>
+
+    <div class="grup-tombol">
+      <a class="tombol tombol-filled" href="{{ collections.bab[0].url }}" data-tombol-lanjut><span class="ikon">play_arrow</span><span data-teks-lanjut>Mulai belajar</span></a>
+      <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
+    </div>
   </div>
+
+  <aside class="kartu-progres" aria-label="Progres belajar">
+    <p class="kartu-progres-judul">Progres belajarmu</p>
+    <div class="progres-garis" aria-hidden="true"><span data-progres-bar></span></div>
+    <p class="kartu-progres-teks" data-progres-teks>0 dari {{ total }} bab selesai</p>
+    <ol class="gelembung-list">
+      {% for item in collections.bab %}
+      <li><a class="gelembung" href="{{ item.url }}" data-gelembung="{{ item.data.bab }}" title="Bab {{ item.data.bab }}: {{ item.data.judul }}">{{ item.data.bab }}</a></li>
+      {% endfor %}
+    </ol>
+    <ul class="legenda">
+      <li><span class="titik"></span>Belum</li>
+      <li><span class="titik titik-mulai"></span>Sedang dibaca</li>
+      <li><span class="titik titik-selesai"></span>Selesai</li>
+    </ul>
+    <p class="catatan-kecil">Progres tersimpan di perangkat ini.</p>
+  </aside>
 </section>
 
-<section id="materi" class="bagian">
-  <h2 class="title-large">Daftar Materi</h2>
-  <ol class="daftar-bab">
+<section class="bagian">
+  <h2 class="title-large">Fasilitas Kelas</h2>
+  <ul class="fasilitas">
+    <li><span class="ikon">menu_book</span><span><strong>Materi bacaan</strong>Dibaca langsung di HP atau laptop.</span></li>
+    <li><span class="ikon">download</span><span><strong>Modul PDF</strong>Bisa diunduh dan dicetak.</span></li>
+    <li><span class="ikon">edit_note</span><span><strong>Latihan soal</strong>Uji pemahaman lewat Google Form.</span></li>
+    <li><span class="ikon">abc</span><span><strong>Glosarium</strong>Kamus istilah penting.</span></li>
+  </ul>
+</section>
+
+<section class="bagian">
+  <h2 class="title-large">Yang Akan Kamu Pelajari</h2>
+  <ul class="tujuan-list">
     {% for item in collections.bab %}
+    <li><span class="ikon">check</span><span>{{ item.data.tujuan }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="bagian" id="silabus">
+  <h2 class="title-large">Silabus</h2>
+  <ol class="silabus">
+    {% for item in collections.bab %}
+    {% set daftarBagian = item.templateContent | bagian %}
     <li>
-      <a class="kartu-bab" href="{{ item.url }}">
-        <span class="avatar bab-{{ item.data.bab }}">{{ item.data.bab }}</span>
-        <span class="kartu-bab-teks">
-          <span class="label">Bab {{ item.data.bab }}</span>
-          <span class="kartu-bab-judul">{{ item.data.judul }}</span>
-          {% if item.data.subjudul %}<span class="kartu-bab-sub">{{ item.data.subjudul }}</span>{% endif %}
-        </span>
-        <span class="ikon kartu-bab-panah">chevron_right</span>
-      </a>
+      <details class="modul-silabus">
+        <summary>
+          <span class="avatar bab-{{ item.data.bab }}">{{ item.data.bab }}</span>
+          <span class="silabus-teks">
+            <span class="silabus-judul">{{ item.data.judul }}</span>
+            <span class="silabus-meta">{{ daftarBagian.length }} bagian · ± {{ item.templateContent | menitBaca }} menit</span>
+          </span>
+          <span class="status-ikon" data-status-bab="{{ item.data.bab }}"></span>
+          <span class="ikon silabus-panah">expand_more</span>
+        </summary>
+        <div class="silabus-isi">
+          {% if item.data.subjudul %}<p class="silabus-sub">{{ item.data.subjudul }}</p>{% endif %}
+          <ol class="silabus-bagian">
+            {% for s in daftarBagian %}
+            <li><a href="{{ item.url }}#{{ s.id }}">{{ s.teks | safe }}</a></li>
+            {% endfor %}
+          </ol>
+          <a class="tombol tombol-tonal" href="{{ item.url }}">Buka Bab {{ item.data.bab }}<span class="ikon">arrow_forward</span></a>
+        </div>
+      </details>
     </li>
     {% endfor %}
+    <li>
+      <a class="modul-silabus modul-latihan" href="/latihan/">
+        <span class="avatar avatar-tersier"><span class="ikon">edit_note</span></span>
+        <span class="silabus-teks">
+          <span class="silabus-judul">Latihan Soal &amp; Ulangan</span>
+          <span class="silabus-meta">Google Form · Kelas 5 dan Kelas 6</span>
+        </span>
+        <span class="ikon silabus-panah">chevron_right</span>
+      </a>
+    </li>
   </ol>
-</section>
-
-<section class="bagian pintasan">
-  <a class="kartu-pintas" href="/latihan/">
-    <span class="ikon">edit_note</span>
-    <span><strong>Latihan Soal</strong>Kerjakan soal sesuai kelasmu lewat Google Form.</span>
-  </a>
-  <a class="kartu-pintas" href="/glosarium/">
-    <span class="ikon">abc</span>
-    <span><strong>Glosarium</strong>Lupa arti sebuah istilah? Cari di sini.</span>
-  </a>
 </section>
