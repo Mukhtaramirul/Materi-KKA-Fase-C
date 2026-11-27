@@ -2,6 +2,9 @@
 layout: base.njk
 ---
 {% set total = collections.bab.length %}
+{% set potong = content | potongSlide %}
+{% set sebelumnya = collections.bab | cariBab(bab - 1) %}
+{% set berikutnya = collections.bab | cariBab(bab + 1) %}
 <div class="kelas" data-bab-sekarang="{{ bab }}">
 
   <header class="bar-kelas">
@@ -11,7 +14,7 @@ layout: base.njk
       <span class="bar-kelas-besar">{{ judul }}</span>
     </div>
     <button class="tombol-ikon tombol-daftar" type="button" data-buka-daftar aria-label="Buka daftar modul" aria-controls="daftar-modul"><span class="ikon">toc</span></button>
-    <div class="bar-progres" aria-hidden="true"><span data-progres-bar></span></div>
+    <div class="bar-progres" aria-hidden="true"><span data-progres-slide></span></div>
   </header>
 
   <aside class="daftar-modul" id="daftar-modul" aria-label="Daftar modul">
@@ -32,9 +35,11 @@ layout: base.njk
         </a>
         {% if aktif %}
         <ol class="sub-list">
-          {% for s in content | bagian %}
-          <li><a href="#{{ s.id }}" data-ke-bagian="{{ s.id }}">{{ s.teks | safe }}</a></li>
+          <li><a href="#pengantar" data-ke-slide="pengantar">Pengantar</a></li>
+          {% for s in potong.bagian %}
+          <li><a href="#{{ s.id }}" data-ke-slide="{{ s.id }}">{{ s.teks | safe }}</a></li>
           {% endfor %}
+          <li><a href="#selesai" data-ke-slide="selesai">Selesai</a></li>
         </ol>
         {% endif %}
       </li>
@@ -50,57 +55,75 @@ layout: base.njk
   <div class="latar-daftar" data-tutup-daftar></div>
 
   <main class="area-belajar">
-    <article class="materi">
-      <header class="materi-kepala">
-        <p class="materi-meta">
-          <span class="chip bab-{{ bab }}">Bab {{ bab }}</span>
-          <span class="meta-item"><span class="ikon">schedule</span>± {{ content | menitBaca }} menit baca</span>
-          <span class="meta-item"><span class="ikon">toc</span>{{ (content | bagian).length }} bagian</span>
-        </p>
-        <h1 class="headline">{{ judul }}</h1>
-        {% if subjudul %}<p class="subjudul">{{ subjudul }}</p>{% endif %}
-      </header>
+    <article class="materi isi">
 
-      {% if tujuan %}
-      <div class="kartu-info kartu-tujuan">
-        <span class="ikon">flag</span>
-        <div>
-          <p class="kartu-info-judul">Yang akan kamu pelajari</p>
-          <p>{{ tujuan }}</p>
+      <section class="slide slide-pembuka" id="pengantar">
+        <header class="materi-kepala">
+          <p class="materi-meta">
+            <span class="chip bab-{{ bab }}">Bab {{ bab }}</span>
+            <span class="meta-item"><span class="ikon">schedule</span>± {{ content | menitBaca }} menit baca</span>
+            <span class="meta-item"><span class="ikon">toc</span>{{ potong.bagian.length }} bagian</span>
+          </p>
+          <h1 class="headline">{{ judul }}</h1>
+          {% if subjudul %}<p class="subjudul">{{ subjudul }}</p>{% endif %}
+        </header>
+
+        {% if tujuan %}
+        <div class="kartu-info kartu-tujuan">
+          <span class="ikon">flag</span>
+          <div>
+            <p class="kartu-info-judul">Yang akan kamu pelajari</p>
+            <p>{{ tujuan }}</p>
+          </div>
         </div>
-      </div>
-      {% endif %}
+        {% endif %}
 
-      <div class="isi">
-        {{ content | safe }}
-      </div>
+        {{ potong.pembuka | safe }}
 
-      <section class="selesai-bab">
-        <span class="ikon">check_circle</span>
-        <h2>Selesai membaca Bab {{ bab }}?</h2>
-        <p>Tandai bab ini selesai supaya progres belajarmu tercatat, lalu lanjutkan ke bab berikutnya atau kerjakan latihan soal.</p>
-        <div class="grup-tombol">
-          <button class="tombol tombol-filled" type="button" data-tandai-selesai><span class="ikon">check</span><span data-teks-tandai>Tandai selesai</span></button>
-          <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
-        </div>
+        <details class="isi-bab">
+          <summary class="isi-bab-judul">Lihat isi bab ({{ potong.bagian.length }} bagian)<span class="ikon">expand_more</span></summary>
+          <ol>
+            {% for s in potong.bagian %}
+            <li><a href="#{{ s.id }}" data-ke-slide="{{ s.id }}">{{ s.teks | safe }}</a></li>
+            {% endfor %}
+          </ol>
+        </details>
       </section>
 
-      <footer class="kaki">Materi KKA Fase C · Koding dan Kecerdasan Artifisial untuk Kelas 5 dan 6</footer>
+      {% for s in potong.slide %}
+      <section class="slide" id="{{ s.id }}" data-induk="{{ s.induk }}">
+        {% if s.lanjutan %}<p class="slide-induk">{{ s.indukTeks | safe }}</p>{% endif %}
+        {{ s.html | safe }}
+      </section>
+      {% endfor %}
+
+      <section class="slide" id="selesai">
+        <div class="selesai-bab">
+          <span class="ikon">check_circle</span>
+          <h2>Hebat, Bab {{ bab }} selesai!</h2>
+          <p>Bab ini sudah ditandai selesai di progres belajarmu. Lanjutkan ke bab berikutnya atau kerjakan latihan soal.</p>
+          <div class="grup-tombol">
+            {% if berikutnya %}
+            <a class="tombol tombol-filled" href="{{ berikutnya.url }}">Lanjut ke Bab {{ berikutnya.data.bab }}<span class="ikon">arrow_forward</span></a>
+            {% endif %}
+            <a class="tombol {% if berikutnya %}tombol-tonal{% else %}tombol-filled{% endif %}" href="/latihan/"><span class="ikon">edit_note</span>Latihan soal</a>
+            <a class="tombol tombol-outlined" href="{{ site.pdf }}" download><span class="ikon">download</span>Unduh PDF</a>
+          </div>
+          <button class="tombol tombol-teks batal-selesai" type="button" data-tandai-selesai><span class="ikon">check_circle</span><span data-teks-tandai>Sudah selesai</span></button>
+        </div>
+        <footer class="kaki">Materi KKA Fase C · Koding dan Kecerdasan Artifisial untuk Kelas 5 dan 6</footer>
+      </section>
+
     </article>
   </main>
 
-  <nav class="bar-bawah" aria-label="Pindah bab">
-    {% set sebelumnya = collections.bab | cariBab(bab - 1) %}
-    {% set berikutnya = collections.bab | cariBab(bab + 1) %}
-    {% if sebelumnya %}
-    <a class="tombol tombol-teks" href="{{ sebelumnya.url }}"><span class="ikon">arrow_back</span>Sebelumnya</a>
-    {% else %}
-    <a class="tombol tombol-teks" href="/#silabus"><span class="ikon">arrow_back</span>Silabus</a>
-    {% endif %}
-    {% if berikutnya %}
-    <a class="tombol tombol-filled" href="{{ berikutnya.url }}">Selanjutnya<span class="ikon">arrow_forward</span></a>
-    {% else %}
-    <a class="tombol tombol-filled" href="/latihan/">Latihan soal<span class="ikon">arrow_forward</span></a>
-    {% endif %}
+  <nav class="bar-bawah" aria-label="Pindah slide">
+    <a class="tombol tombol-teks" href="{{ sebelumnya.url if sebelumnya else '/#silabus' }}" data-tombol-mundur>
+      <span class="ikon">arrow_back</span><span data-label-mundur>Sebelumnya</span>
+    </a>
+    <span class="penghitung-slide" data-penghitung aria-live="polite"></span>
+    <a class="tombol tombol-filled" href="{{ berikutnya.url if berikutnya else '/latihan/' }}" data-tombol-maju>
+      <span data-label-maju>Selanjutnya</span><span class="ikon">arrow_forward</span>
+    </a>
   </nav>
 </div>

@@ -515,8 +515,48 @@ details.kunci > :last-child { margin-bottom: 16px; }
 .selesai-bab h2 { font-size: 22px; line-height: 28px; font-weight: 400; margin: 8px 0 0; }
 .selesai-bab p { color: var(--md-on-surface-variant); margin: 8px auto 20px; max-width: 52ch; }
 .selesai-bab .grup-tombol { justify-content: center; }
-.tombol.sudah-selesai { background: var(--md-sukses-container); color: var(--md-on-sukses-container); }
-.tombol.sudah-selesai .ikon { font-variation-settings: "FILL" 1; }
+.batal-selesai { margin-top: 12px; font-size: 13px; color: var(--md-on-surface-variant); }
+.batal-selesai.sudah-selesai .ikon { color: var(--md-sukses); font-variation-settings: "FILL" 1; }
+
+/* ---------- Slide materi ---------- */
+.pakai-slide .slide { animation: slide-masuk 0.25s ease; }
+.slide[hidden] { display: none; }
+@keyframes slide-masuk { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pakai-slide .slide { animation: none; } }
+.slide > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; font-size: 24px; line-height: 32px; }
+.pakai-slide .selesai-bab { margin-top: 0; }
+.slide-induk {
+  margin: 0 0 4px !important; font-size: 12px; line-height: 16px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--md-on-surface-variant);
+}
+.slide-induk + h3, .slide-induk + .kotak { margin-top: 0; }
+.slide > h3:first-child { margin-top: 0; }
+.slide h3 { font-size: 20px; line-height: 28px; }
+
+.isi-bab {
+  margin-top: 24px; padding: 16px 20px; border-radius: var(--shape-l);
+  border: 1px solid var(--md-outline-variant);
+}
+.isi-bab { padding: 0 20px; }
+.isi-bab-judul {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  min-height: 52px; font-weight: 500; color: var(--md-primary);
+}
+.isi-bab-judul::-webkit-details-marker { display: none; }
+.isi-bab-judul .ikon { transition: transform 0.2s; }
+.isi-bab[open] .isi-bab-judul .ikon { transform: rotate(180deg); }
+.isi-bab ol { margin: 0 0 16px; padding-left: 22px; }
+.isi-bab li { margin-bottom: 4px; }
+.isi-bab a { color: var(--md-on-surface); text-decoration: none; }
+.isi-bab a:hover { color: var(--md-primary); text-decoration: underline; }
+
+.penghitung-slide {
+  font-size: 14px; font-weight: 500; color: var(--md-on-surface-variant);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+@media (max-width: 400px) {
+  .bar-bawah .tombol { padding-left: 12px; padding-right: 12px; }
+}
 
 /* ---------- Halaman umum: latihan & glosarium ---------- */
 .halaman { max-width: 840px; margin: 0 auto; }

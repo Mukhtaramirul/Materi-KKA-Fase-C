@@ -43,7 +43,9 @@
     if (tombolTandai) {
       const sudah = progres[babSekarang] === "selesai";
       tombolTandai.classList.toggle("sudah-selesai", sudah);
-      tombolTandai.querySelector("[data-teks-tandai]").textContent = sudah ? "Sudah selesai" : "Tandai selesai";
+      tombolTandai.querySelector("[data-teks-tandai]").textContent = sudah
+        ? "Sudah selesai (ketuk untuk batal)"
+        : "Tandai selesai";
       tombolTandai.querySelector(".ikon").textContent = sudah ? "check_circle" : "check";
     }
   };
@@ -70,22 +72,91 @@
   );
   document.addEventListener("keydown", (e) => e.key === "Escape" && bukaDaftar(false));
 
-  // Penanda bagian yang sedang dibaca di daftar modul.
-  const tautanBagian = new Map(
-    [...document.querySelectorAll("[data-ke-bagian]")].map((a) => [a.dataset.keBagian, a])
-  );
-  if (tautanBagian.size && "IntersectionObserver" in window) {
-    const pengamat = new IntersectionObserver(
-      (entri) => {
-        entri.forEach((e) => {
-          if (!e.isIntersecting) return;
-          tautanBagian.forEach((a) => a.classList.remove("aktif"));
-          tautanBagian.get(e.target.id)?.classList.add("aktif");
-        });
-      },
-      { rootMargin: "-20% 0px -70% 0px" }
+  // Materi per slide: satu bagian tampil, pindah dengan tombol, geser, atau panah keyboard.
+  const slide = [...document.querySelectorAll(".slide")];
+  if (slide.length) {
+    document.body.classList.add("pakai-slide");
+    const tombolMundur = document.querySelector("[data-tombol-mundur]");
+    const tombolMaju = document.querySelector("[data-tombol-maju]");
+    const labelMundur = document.querySelector("[data-label-mundur]");
+    const labelMaju = document.querySelector("[data-label-maju]");
+    const hrefMundur = tombolMundur.href;
+    const hrefMaju = tombolMaju.href;
+    const adaBabBerikutnya = !hrefMaju.endsWith("/latihan/");
+    const adaBabSebelumnya = !hrefMundur.includes("#silabus");
+    const penghitung = document.querySelector("[data-penghitung]");
+    const garisSlide = document.querySelector("[data-progres-slide]");
+    const tautanSlide = [...document.querySelectorAll(".sub-list [data-ke-slide]")];
+    const terakhir = slide.length - 1;
+    let posisi = 0;
+
+    const indeksDari = (id) => Math.max(0, slide.findIndex((s) => s.id === id));
+
+    const tampilkanSlide = (ke, gulir = true) => {
+      posisi = Math.min(Math.max(ke, 0), terakhir);
+      slide.forEach((s, i) => (s.hidden = i !== posisi));
+      const id = slide[posisi].id;
+      history.replaceState(null, "", posisi === 0 ? location.pathname : "#" + id);
+
+      penghitung.textContent = `${posisi + 1} / ${slide.length}`;
+      garisSlide.style.width = ((posisi + 1) / slide.length) * 100 + "%";
+      const induk = slide[posisi].dataset.induk || id;
+      tautanSlide.forEach((a) => a.classList.toggle("aktif", a.dataset.keSlide === induk));
+
+      labelMundur.textContent = posisi > 0 ? "Sebelumnya" : adaBabSebelumnya ? "Bab sebelumnya" : "Silabus";
+      tombolMundur.href = posisi === 0 ? hrefMundur : "#" + slide[posisi - 1].id;
+      labelMaju.textContent =
+        posisi < terakhir ? "Selanjutnya" : adaBabBerikutnya ? "Bab berikutnya" : "Latihan soal";
+      tombolMaju.href = posisi < terakhir ? "#" + slide[posisi + 1].id : hrefMaju;
+
+      // Sampai di slide terakhir = bab selesai dibaca.
+      if (posisi === terakhir && progres[babSekarang] !== "selesai") {
+        progres[babSekarang] = "selesai";
+        simpan(KUNCI_PROGRES, progres);
+        tampilkan();
+      }
+      if (gulir) window.scrollTo({ top: 0, behavior: "instant" });
+    };
+
+    const maju = () => posisi < terakhir && tampilkanSlide(posisi + 1);
+    const mundur = () => posisi > 0 && tampilkanSlide(posisi - 1);
+
+    tombolMaju.addEventListener("click", (e) => { if (posisi < terakhir) { e.preventDefault(); maju(); } });
+    tombolMundur.addEventListener("click", (e) => { if (posisi > 0) { e.preventDefault(); mundur(); } });
+
+    // Tautan ke slide tertentu (daftar modul, isi bab).
+    document.querySelectorAll("[data-ke-slide]").forEach((a) =>
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        tampilkanSlide(indeksDari(a.dataset.keSlide));
+      })
     );
-    document.querySelectorAll(".isi h2[id]").forEach((h) => pengamat.observe(h));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.target.closest("input, textarea, summary")) return;
+      if (e.key === "ArrowRight") maju();
+      if (e.key === "ArrowLeft") mundur();
+    });
+
+    // Geser ke kiri/kanan di HP.
+    let awalX = null, awalY = 0;
+    const area = document.querySelector(".area-belajar");
+    area.addEventListener("touchstart", (e) => {
+      if (e.target.closest(".tabel")) return (awalX = null); // tabel boleh digeser sendiri
+      awalX = e.touches[0].clientX;
+      awalY = e.touches[0].clientY;
+    }, { passive: true });
+    area.addEventListener("touchend", (e) => {
+      if (awalX === null) return;
+      const dx = e.changedTouches[0].clientX - awalX;
+      const dy = e.changedTouches[0].clientY - awalY;
+      if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) (dx < 0 ? maju : mundur)();
+      awalX = null;
+    }, { passive: true });
+
+    const slideDariAlamat = () => (location.hash ? indeksDari(decodeURIComponent(location.hash.slice(1))) : 0);
+    window.addEventListener("hashchange", () => tampilkanSlide(slideDariAlamat()));
+    tampilkanSlide(slideDariAlamat(), false);
   }
 
   tampilkan();

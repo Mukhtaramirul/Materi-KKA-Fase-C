@@ -36,10 +36,31 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("cariBab", (items = [], nomor) => items.find((item) => item.data.bab === nomor));
 
-  // Memberi id pada judul bagian di halaman materi agar bisa dituju dari daftar isi.
-  eleventyConfig.addTransform("idJudulBagian", function (isi) {
-    if (!this.page.outputPath?.endsWith(".html") || !this.page.url.startsWith("/materi/")) return isi;
-    return isi.replace(JUDUL_BAGIAN, (_, teks) => `<h2 id="${slugify(tanpaTag(teks))}">${teks}</h2>`);
+  // Memecah isi satu bab menjadi slide agar dibaca per layar, bukan digulir panjang.
+  // - Satu bagian (## ) = satu slide.
+  // - Bagian yang punya sub-judul (### ) dipecah lagi per sub-judul.
+  // - Kotak Refleksi (beserta kunci jawaban) mendapat slide sendiri.
+  // Hasil: { pembuka, bagian: [{ id, teks }], slide: [{ id, html, induk, indukTeks, lanjutan }] }
+  const PEMISAH_SUB = /(?=<h3>|<div class="kotak kotak-refleksi">)/;
+  eleventyConfig.addFilter("potongSlide", (html = "") => {
+    const potongan = html.split(/(?=<h2>)/);
+    const pembuka = potongan[0].startsWith("<h2>") ? "" : potongan.shift();
+    const bagian = [];
+    const slide = [];
+    for (const isiBagian of potongan) {
+      const teks = tanpaTag(isiBagian.match(/<h2>([\s\S]*?)<\/h2>/)[1]);
+      const id = slugify(teks);
+      bagian.push({ id, teks });
+      const sub = isiBagian.split(PEMISAH_SUB);
+      // Judul bagian yang hanya diikuti teks pendek digabung dengan sub-bagian pertama.
+      if (sub.length > 1 && tanpaTag(sub[0].replace(/<h2>[\s\S]*?<\/h2>/, "")).length < 200) {
+        sub.splice(0, 2, sub[0] + sub[1]);
+      }
+      sub.forEach((isi, k) =>
+        slide.push({ id: k ? `${id}-${k + 1}` : id, html: isi, induk: id, indukTeks: teks, lanjutan: k > 0 })
+      );
+    }
+    return { pembuka, bagian, slide };
   });
 
   return {
