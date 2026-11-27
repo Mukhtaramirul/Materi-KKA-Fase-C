@@ -20,29 +20,25 @@ Dengan berpikir komputasional, kita belajar memecah masalah besar menjadi langka
 
 ## B. Empat Teknik Kunci Berpikir Komputasional
 
-### 1. Dekomposisi (Memecah Masalah Menjadi Bagian Kecil)
-
-Kadang kita menemui masalah yang terasa besar dan rumit. Dengan dekomposisi, kita bisa membaginya menjadi langkah-langkah kecil yang lebih mudah dikerjakan.
+```jelajahi
+Petunjuk: Ketuk setiap tombol (+) untuk mempelajari 4 teknik kunci berpikir komputasional.
+# Dekomposisi
+**Memecah masalah menjadi bagian kecil.** Kadang kita menemui masalah yang terasa besar dan rumit. Dengan dekomposisi, kita bisa membaginya menjadi langkah-langkah kecil yang lebih mudah dikerjakan.
 
 Contoh sehari-hari: merencanakan acara ulang tahun bisa dipecah menjadi: memilih tempat, membuat undangan, menyiapkan makanan, dan menyusun jadwal acara.
-
-### 2. Abstraksi (Fokus pada Hal Penting)
-
-Saat menyelesaikan masalah, kita tidak perlu memperhatikan semua detail. Cukup fokus pada hal-hal yang penting saja dan abaikan yang tidak perlu.
+# Abstraksi
+**Fokus pada hal penting.** Saat menyelesaikan masalah, kita tidak perlu memperhatikan semua detail. Cukup fokus pada hal-hal yang penting saja dan abaikan yang tidak perlu.
 
 Contoh sehari-hari: jika kamu menjelaskan cara mengikat tali sepatu, cukup jelaskan tentang tali dan tangan — tidak perlu membahas warna sepatu atau bentuk kaos kaki.
-
-### 3. Pengenalan Pola (Menemukan Kemiripan)
-
-Pengenalan pola adalah kemampuan melihat hal-hal yang sering muncul atau berulang. Dengan mengenali pola, kita bisa lebih cepat menemukan solusi.
+# Pengenalan Pola
+**Menemukan kemiripan.** Pengenalan pola adalah kemampuan melihat hal-hal yang sering muncul atau berulang. Dengan mengenali pola, kita bisa lebih cepat menemukan solusi.
 
 Contoh sehari-hari: pola kegiatan harian (bangun → mandi → sarapan → berangkat sekolah), atau pola pada jadwal pelajaran yang berulang tiap minggu.
-
-### 4. Algoritma (Menyusun Langkah yang Teratur)
-
-Algoritma adalah susunan langkah-langkah yang harus dilakukan secara urut agar hasilnya sesuai harapan. Algoritma dibahas lebih lengkap di bagian D.
+# Algoritma
+**Menyusun langkah yang teratur.** Algoritma adalah susunan langkah-langkah yang harus dilakukan secara urut agar hasilnya sesuai harapan. Algoritma dibahas lebih lengkap di bagian D.
 
 Contoh sehari-hari: langkah membuat roti lapis — ambil dua potong roti, oleskan selai, tumpuk roti, lalu potong jadi dua. Kalau urutannya salah, selai bisa belepotan ke tangan!
+```
 
 <figure><img src="/assets/img/image2.png" alt="4 teknik kunci berpikir komputasional" loading="lazy"><figcaption>Gambar 2.1 — 4 teknik kunci berpikir komputasional</figcaption></figure>
 
@@ -111,6 +107,43 @@ Bayangkan kelasmu akan mengadakan piknik ke taman kota. Cobalah terapkan keempat
 - Abstraksi: fokus pada kebutuhan penting, abaikan hal yang tidak perlu dipikirkan sekarang.
 
 - Algoritma: susun urutan persiapan dari yang paling awal sampai hari-H, lalu tandai langkah mana yang termasuk sekuensial, percabangan (misalnya “JIKA hujan, MAKA ...”), atau perulangan.
+
+## Cek Pemahaman
+
+Jawab 3 pertanyaan berikut. Kamu langsung tahu jawabanmu benar atau belum.
+
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Untuk lomba 17 Agustus, panitia membagi pekerjaan menjadi tiga: menghias kelas, menyiapkan hadiah, dan menyusun jadwal lomba. Teknik berpikir komputasional apa yang dipakai panitia?
+* Dekomposisi
+- Abstraksi
+- Pengenalan pola
+- Algoritma perulangan
+Penjelasan: Dekomposisi berarti memecah masalah besar (menyiapkan lomba) menjadi bagian-bagian kecil yang lebih mudah dikerjakan.
+```
+
+### Pertanyaan 2
+
+```kuis
+Pertanyaan: “JIKA hari hujan, MAKA aku membawa payung.” Kalimat ini adalah contoh algoritma …
+- Sekuensial
+* Percabangan
+- Perulangan
+- Abstraksi
+Penjelasan: Ada syarat (hari hujan) yang menentukan langkah yang dilakukan. Algoritma dengan kata “JIKA … MAKA …” disebut percabangan.
+```
+
+### Pertanyaan 3
+
+```kuis
+Pertanyaan: Sebuah program berbunyi: “JIKA nilai DI ATAS 75, MAKA tampilkan ‘Lulus’.” Nilai Dina tepat 75. Apa yang terjadi?
+- Muncul tulisan ‘Lulus’, karena 75 sama dengan 75
+* Tulisan ‘Lulus’ tidak muncul, karena 75 tidak di atas 75
+- Program berhenti dan rusak
+- Muncul tulisan ‘Lulus’ dua kali
+Penjelasan: “Di atas 75” berarti harus lebih besar dari 75. Nilai tepat 75 belum memenuhi syarat. Ingat, teliti membaca kata kunci seperti “di atas” dan “paling sedikit”.
+```
 
 ## H. Latihan Soal 2
 

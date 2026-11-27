@@ -46,6 +46,39 @@ Tambahkan satu blok di dalam daftar `"soal"` kelas yang sesuai (perhatikan tanda
 - `**teks**` → **tebal**
 - Baris diawali `1. ` → daftar bernomor, diawali `- ` → daftar berpoin
 - Beri satu baris kosong di antara paragraf.
+- Setiap `##` dan `###` otomatis menjadi slide baru (murid menekan **Selanjutnya**).
+
+### Menambah kuis cek pemahaman (umpan balik langsung)
+Tulis blok ini di file bab. Pilihan benar diawali `*`, pilihan salah diawali `-`:
+
+````
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Blok "ketika bendera hijau diklik" termasuk kategori …
+- Gerakan (biru)
+* Kejadian (kuning)
+- Suara (merah muda)
+Penjelasan: Blok Kejadian menentukan kapan program mulai berjalan.
+```
+````
+
+Penjelasan hanya muncul setelah murid menjawab benar. Jika salah, murid diminta mencoba lagi.
+
+### Menambah kartu jelajahi (tombol + yang diketuk)
+Setiap baris yang diawali `# ` menjadi satu kartu:
+
+````
+```jelajahi
+Petunjuk: Ketuk setiap tombol (+) untuk mempelajari 3 jenis algoritma.
+# Sekuensial
+Langkah dikerjakan urut, satu per satu.
+# Percabangan
+Ada pilihan langkah berdasarkan syarat (JIKA … MAKA …).
+# Perulangan
+Langkah yang sama diulang sampai selesai.
+```
+````
 
 ## C. Agar muncul di Google (cukup sekali, setelah website aktif)
 

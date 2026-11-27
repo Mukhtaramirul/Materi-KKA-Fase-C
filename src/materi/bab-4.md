@@ -62,11 +62,15 @@ Tidak semua mesin bisa disebut cerdas.
 
 KA bekerja mirip seperti cara kita belajar:
 
-1. **Mengamati (Input)**: menerima data dari kamera, mikrofon, atau sensor.
-
-2. **Belajar (Proses)**: mengenali pola dari data yang dikumpulkan.
-
-3. **Bertindak (Output)**: memberikan hasil sesuai pembelajaran.
+```jelajahi
+Petunjuk: Ketuk setiap tombol (+) secara berurutan untuk melihat 3 langkah cara kerja KA.
+# 1. Mengamati (Input)
+Menerima data dari kamera, mikrofon, atau sensor.
+# 2. Belajar (Proses)
+Mengenali pola dari data yang dikumpulkan.
+# 3. Bertindak (Output)
+Memberikan hasil sesuai pembelajaran.
+```
 
 ### Contoh sederhana:
 
@@ -140,6 +144,43 @@ Buatlah poster sederhana bertema “KA Membantuku Sehari-hari”.
 - Gambar alat atau aplikasi yang kamu gunakan (misal: kamera, YouTube, atau Google Maps).
 
 - Tulis fungsinya dan bagaimana KA membantu kamu.
+
+## Cek Pemahaman
+
+Jawab 3 pertanyaan berikut. Kamu langsung tahu jawabanmu benar atau belum.
+
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Manakah urutan cara kerja KA yang benar?
+- Bertindak (output) → Mengamati (input) → Belajar (proses)
+* Mengamati (input) → Belajar (proses) → Bertindak (output)
+- Belajar (proses) → Bertindak (output) → Mengamati (input)
+- Mengamati (input) → Bertindak (output) → Belajar (proses)
+Penjelasan: KA menerima data dulu (input), lalu mengenali pola dari data itu (proses), kemudian memberikan hasil (output).
+```
+
+### Pertanyaan 2
+
+```kuis
+Pertanyaan: Manakah yang termasuk **mesin cerdas** (menggunakan KA)?
+- Jam digital
+- Kipas angin
+* Asisten suara seperti Google Assistant
+- Kalkulator sederhana
+Penjelasan: Mesin cerdas dapat belajar dari data dan menyesuaikan diri, seperti asisten suara. Jam digital dan kipas angin hanya menjalankan perintah.
+```
+
+### Pertanyaan 3
+
+```kuis
+Pertanyaan: Chatbot memberi jawaban yang ternyata salah untuk tugas sekolahmu. Sikap yang paling tepat adalah …
+- Langsung menyalin jawabannya
+* Memeriksa ulang ke buku atau bertanya kepada guru
+- Membagikan jawabannya ke teman tanpa dicek
+- Tidak mau belajar lagi
+Penjelasan: Tidak semua hasil KA selalu benar. Hasil KA perlu diperiksa ulang dengan sumber lain, misalnya buku atau guru.
+```
 
 ## I. LK 4.1: Refleksi Etika KA
 

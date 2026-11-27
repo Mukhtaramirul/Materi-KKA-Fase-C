@@ -133,7 +133,7 @@
     );
 
     document.addEventListener("keydown", (e) => {
-      if (e.target.closest("input, textarea, summary")) return;
+      if (e.target.closest("input, textarea, summary, .kuis, .jelajahi")) return;
       if (e.key === "ArrowRight") maju();
       if (e.key === "ArrowLeft") mundur();
     });
@@ -142,7 +142,7 @@
     let awalX = null, awalY = 0;
     const area = document.querySelector(".area-belajar");
     area.addEventListener("touchstart", (e) => {
-      if (e.target.closest(".tabel")) return (awalX = null); // tabel boleh digeser sendiri
+      if (e.target.closest(".tabel, .jelajahi")) return (awalX = null); // tabel & kartu tidak memicu pindah slide
       awalX = e.touches[0].clientX;
       awalY = e.touches[0].clientY;
     }, { passive: true });
@@ -158,6 +158,77 @@
     window.addEventListener("hashchange", () => tampilkanSlide(slideDariAlamat()));
     tampilkanSlide(slideDariAlamat(), false);
   }
+
+  // Kuis cek pemahaman: pilih jawaban → periksa → umpan balik langsung.
+  document.querySelectorAll("[data-kuis]").forEach((kuis) => {
+    const pilihan = [...kuis.querySelectorAll("input[type=radio]")];
+    const tombolPeriksa = kuis.querySelector("[data-periksa]");
+    const tombolUlangi = kuis.querySelector("[data-ulangi]");
+    const umpan = kuis.querySelector("[data-umpan]");
+    const judulUmpan = kuis.querySelector("[data-umpan-judul]");
+
+    pilihan.forEach((r) => r.addEventListener("change", () => (tombolPeriksa.disabled = false)));
+
+    tombolPeriksa.addEventListener("click", () => {
+      const dipilih = pilihan.find((r) => r.checked);
+      if (!dipilih) return;
+      const benar = dipilih.hasAttribute("data-benar");
+      kuis.classList.add(benar ? "jawaban-benar" : "jawaban-salah");
+      dipilih.closest(".pilihan").classList.add(benar ? "pilih-benar" : "pilih-salah");
+      pilihan.forEach((r) => (r.disabled = true));
+      judulUmpan.textContent = benar ? "Benar! Hebat 🎉" : "Belum tepat. Baca lagi pilihannya, lalu coba lagi ya!";
+      umpan.hidden = false;
+      tombolPeriksa.hidden = true;
+      tombolUlangi.hidden = benar;
+    });
+
+    tombolUlangi.addEventListener("click", () => {
+      kuis.classList.remove("jawaban-benar", "jawaban-salah");
+      kuis.querySelectorAll(".pilihan").forEach((p) => p.classList.remove("pilih-benar", "pilih-salah"));
+      pilihan.forEach((r) => { r.disabled = false; r.checked = false; });
+      umpan.hidden = true;
+      tombolUlangi.hidden = true;
+      tombolPeriksa.hidden = false;
+      tombolPeriksa.disabled = true;
+    });
+  });
+
+  // Kartu jelajahi: ketuk tombol (+) untuk membuka penjelasan, geser dengan ‹ ›.
+  document.querySelectorAll("[data-jelajahi]").forEach((wadah) => {
+    const tombol = [...wadah.querySelectorAll("[data-buka]")];
+    const isi = [...wadah.querySelectorAll("[data-isi]")];
+    const panel = wadah.querySelector("[data-panel]");
+    const hitung = wadah.querySelector("[data-hitung]");
+    const progresTeks = wadah.querySelector("[data-progres-jelajahi]");
+    const dibuka = new Set();
+    let aktif = -1;
+
+    const buka = (i) => {
+      aktif = (i + isi.length) % isi.length;
+      panel.hidden = false;
+      isi.forEach((el, k) => (el.hidden = k !== aktif));
+      tombol.forEach((t, k) => t.classList.toggle("aktif", k === aktif));
+      dibuka.add(aktif);
+      tombol[aktif].classList.add("sudah");
+      tombol[aktif].querySelector(".ikon").textContent = "check";
+      hitung.textContent = `${aktif + 1} dari ${isi.length}`;
+      panel.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      const semua = dibuka.size === isi.length;
+      wadah.classList.toggle("semua-dibuka", semua);
+      progresTeks.textContent = semua
+        ? "Hebat, semua kartu sudah kamu buka! 🎉"
+        : `${dibuka.size} dari ${isi.length} sudah dibuka`;
+    };
+
+    tombol.forEach((t) => t.addEventListener("click", () => buka(Number(t.dataset.buka))));
+    wadah.querySelectorAll("[data-geser]").forEach((t) =>
+      t.addEventListener("click", () => buka(aktif + Number(t.dataset.geser)))
+    );
+    wadah.querySelector("[data-tutup]").addEventListener("click", () => {
+      panel.hidden = true;
+      tombol.forEach((t) => t.classList.remove("aktif"));
+    });
+  });
 
   tampilkan();
 })();

@@ -104,17 +104,58 @@ Bayangkan kamu bisa menciptakan KA buatanmu sendiri! Tugasmu adalah merancang KA
 
 KA bisa jadi teman belajar yang hebat, tapi tetap perlu etika digital saat menggunakannya. Berikut 5 aturan emas menggunakan KA dengan bijak:
 
-1. Gunakan KA untuk membantu belajar, bukan untuk menipu.
-
-2. Periksa ulang hasil KA, jangan langsung dipercaya.
-
-3. Jangan menyebarkan hasil KA tanpa izin atau tanpa sumber.
-
-4. Gunakan KA untuk kebaikan dan kemanusiaan.
-
-5. Jaga data pribadi saat menggunakan aplikasi berbasis KA.
+```jelajahi
+Petunjuk: Ketuk setiap tombol (+) untuk membuka 5 aturan emas menggunakan KA.
+# Aturan 1
+Gunakan KA untuk membantu belajar, bukan untuk menipu.
+# Aturan 2
+Periksa ulang hasil KA, jangan langsung dipercaya.
+# Aturan 3
+Jangan menyebarkan hasil KA tanpa izin atau tanpa sumber.
+# Aturan 4
+Gunakan KA untuk kebaikan dan kemanusiaan.
+# Aturan 5
+Jaga data pribadi saat menggunakan aplikasi berbasis KA.
+```
 
 <div class="kotak"><p class="kotak-judul">Pesan Guru</p><p>KA bisa sangat cerdas, tapi tetap membutuhkan manusia yang berakal budi dan beretika.</p></div>
+
+## Cek Pemahaman
+
+Jawab 3 pertanyaan berikut. Kamu langsung tahu jawabanmu benar atau belum.
+
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Drone yang memantau sawah membantu petani mengetahui waktu tanam dan panen terbaik. KA ini digunakan di bidang …
+- Pendidikan
+- Kesehatan
+* Pertanian
+- Transportasi
+Penjelasan: Drone pemantau sawah dan sensor tanah adalah contoh KA di bidang pertanian.
+```
+
+### Pertanyaan 2
+
+```kuis
+Pertanyaan: Manakah contoh penggunaan KA yang **berisiko**?
+- Membantu memprediksi cuaca
+- Membantu siswa belajar dari rumah
+* Membuat dan menyebarkan berita palsu (hoaks)
+- Menemukan lagu kesukaanmu
+Penjelasan: KA berisiko jika dipakai untuk menyebarkan hoaks, mengambil data pribadi tanpa izin, atau membuat konten menyesatkan.
+```
+
+### Pertanyaan 3
+
+```kuis
+Pertanyaan: Andi memakai KA untuk membantu mengerjakan tugas. Menurut aturan emas, apa yang harus Andi lakukan sebelum mengumpulkan tugasnya?
+- Langsung mengumpulkan semua jawaban dari KA
+* Memeriksa ulang hasil KA dan memahaminya
+- Menuliskan alamat rumahnya ke aplikasi KA
+- Menyebarkan hasilnya tanpa menyebut sumber
+Penjelasan: Aturan emas nomor 2: periksa ulang hasil KA, jangan langsung dipercaya. KA dipakai untuk membantu belajar, bukan untuk menipu.
+```
 
 ## F. LK 5.1: “KA di Sekitarku”
 

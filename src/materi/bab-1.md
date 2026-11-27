@@ -75,6 +75,43 @@ Ayo cari tahu: teknologi apa saja di rumah atau sekolahmu yang menggunakan KA? T
 
 </div>
 
+## Cek Pemahaman
+
+Jawab 3 pertanyaan berikut. Kamu langsung tahu jawabanmu benar atau belum.
+
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Rina sering mendengarkan lagu anak-anak di aplikasi musik. Lama-lama, aplikasi itu menyarankan lagu anak-anak lainnya kepada Rina. Aplikasi tersebut menggunakan …
+- Koding biasa, karena hasilnya selalu sama untuk semua orang
+* Kecerdasan artifisial (KA), karena belajar dari kebiasaan pengguna
+- Kalkulator yang menghitung jumlah lagu
+- Tidak memakai koding sama sekali
+Penjelasan: KA belajar dari data. Aplikasi mempelajari kebiasaan mendengarkan Rina, lalu menyesuaikan sarannya. Koding biasa hasilnya selalu sama.
+```
+
+### Pertanyaan 2
+
+```kuis
+Pertanyaan: Mengapa perintah dalam koding harus ditulis dengan jelas dan berurutan?
+- Karena komputer bisa menebak maksud kita
+* Karena komputer hanya menjalankan persis apa yang dituliskan
+- Supaya tulisan kodenya terlihat bagus
+- Karena komputer tidak membutuhkan perintah
+Penjelasan: Komputer tidak bisa menebak-nebak maksud kita. Ia hanya menjalankan persis apa yang dituliskan, seperti mengikuti resep langkah demi langkah.
+```
+
+### Pertanyaan 3
+
+```kuis
+Pertanyaan: Manakah yang merupakan contoh program **koding biasa**, bukan KA?
+- Kamera HP yang mengenali wajah pemiliknya
+- Aplikasi peta yang mencari rute tercepat
+* Kalkulator sederhana
+- Chatbot yang menjawab pertanyaan
+Penjelasan: Kalkulator sederhana hanya menjalankan instruksi dari pembuatnya dan hasilnya selalu sama. Tiga pilihan lain belajar dari data, jadi termasuk KA.
+```
+
 ## H. Latihan Soal 1
 
 ### Bagian A — Isian Singkat

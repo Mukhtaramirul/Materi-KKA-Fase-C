@@ -1,12 +1,102 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
 
+// ---------- Komponen interaktif di dalam materi ----------
+let nomorKuis = 0;
+
+/*
+```kuis
+Pertanyaan: teks pertanyaan
+- pilihan salah
+* pilihan benar (diawali bintang)
+Penjelasan: alasan jawaban benar
+```
+*/
+function buatKuis(isi, md) {
+  const tanya = [];
+  const pilihan = [];
+  let penjelasan = "";
+  for (const baris of isi.split("\n").map((b) => b.trim()).filter(Boolean)) {
+    if (/^[-*] /.test(baris)) pilihan.push({ teks: baris.slice(2), benar: baris[0] === "*" });
+    else if (/^penjelasan:/i.test(baris)) penjelasan = baris.replace(/^penjelasan:\s*/i, "");
+    else if (penjelasan) penjelasan += " " + baris;
+    else tanya.push(baris.replace(/^pertanyaan:\s*/i, ""));
+  }
+  const nama = `kuis-${++nomorKuis}`;
+  const daftar = pilihan
+    .map(
+      (p, i) =>
+        `<label class="pilihan"><input type="radio" name="${nama}" value="${i}"${p.benar ? " data-benar" : ""}>` +
+        `<span class="pilihan-tanda" aria-hidden="true"></span><span class="pilihan-teks">${md.renderInline(p.teks)}</span></label>`
+    )
+    .join("");
+  return `<div class="kuis" data-kuis>
+<p class="kuis-label"><span class="ikon">quiz</span>Pilih satu jawaban</p>
+<p class="kuis-tanya">${md.renderInline(tanya.join(" "))}</p>
+<div class="kuis-pilihan" role="radiogroup">${daftar}</div>
+<div class="kuis-umpan" data-umpan hidden aria-live="polite"><p class="kuis-umpan-judul" data-umpan-judul></p><p class="kuis-penjelasan">${md.renderInline(penjelasan)}</p></div>
+<div class="grup-tombol"><button class="tombol tombol-filled" type="button" data-periksa disabled>Periksa jawaban</button><button class="tombol tombol-teks" type="button" data-ulangi hidden><span class="ikon">refresh</span>Coba lagi</button></div>
+</div>
+`;
+}
+
+/*
+```jelajahi
+Petunjuk: Ketuk setiap tombol untuk mempelajari ...
+# Judul kartu pertama
+Isi kartu (boleh beberapa paragraf, **tebal**, daftar).
+# Judul kartu kedua
+...
+```
+*/
+function buatJelajahi(isi, md) {
+  const kartu = [];
+  let petunjuk = "Ketuk setiap tombol (+) untuk membuka penjelasannya.";
+  for (const baris of isi.split("\n")) {
+    if (/^petunjuk:/i.test(baris.trim())) petunjuk = baris.trim().replace(/^petunjuk:\s*/i, "");
+    else if (baris.startsWith("# ")) kartu.push({ judul: baris.slice(2).trim(), isi: [] });
+    else if (kartu.length) kartu.at(-1).isi.push(baris);
+  }
+  const tombol = kartu
+    .map(
+      (k, i) =>
+        `<button class="titik-info" type="button" data-buka="${i}"><span class="titik-info-ikon"><span class="ikon">add</span></span><span>${md.renderInline(k.judul)}</span></button>`
+    )
+    .join("");
+  const panel = kartu
+    .map(
+      (k, i) =>
+        `<div class="jelajahi-isi" data-isi="${i}" hidden><p class="jelajahi-judul">${md.renderInline(k.judul)}</p>${md.render(k.isi.join("\n"))}</div>`
+    )
+    .join("");
+  return `<div class="jelajahi" data-jelajahi>
+<p class="jelajahi-petunjuk"><span class="ikon">touch_app</span>${md.renderInline(petunjuk)}</p>
+<div class="jelajahi-tombol">${tombol}</div>
+<div class="jelajahi-panel" data-panel hidden>
+<div class="jelajahi-nav"><span class="jelajahi-hitung" data-hitung></span><button class="tombol-ikon" type="button" data-geser="-1" aria-label="Kartu sebelumnya"><span class="ikon">chevron_left</span></button><button class="tombol-ikon" type="button" data-geser="1" aria-label="Kartu berikutnya"><span class="ikon">chevron_right</span></button><button class="tombol-ikon" type="button" data-tutup aria-label="Tutup"><span class="ikon">close</span></button></div>
+${panel}
+</div>
+<p class="jelajahi-progres" data-progres-jelajahi>0 dari ${kartu.length} sudah dibuka</p>
+</div>
+`;
+}
+
 export default function (eleventyConfig) {
   // Menyesuaikan semua link "/..." dengan alamat GitHub Pages (misal /materi-kka-fasec/).
   eleventyConfig.addPlugin(HtmlBasePlugin);
   eleventyConfig.addPassthroughCopy("src/assets");
 
   // Alamat web yang tertulis di materi otomatis menjadi link yang bisa diklik.
-  eleventyConfig.amendLibrary("md", (md) => md.set({ linkify: true }));
+  // Blok ```kuis dan ```jelajahi di materi diubah menjadi komponen interaktif.
+  eleventyConfig.amendLibrary("md", (md) => {
+    md.set({ linkify: true });
+    const fenceAsli = md.renderer.rules.fence;
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+      const jenis = tokens[idx].info.trim();
+      if (jenis === "kuis") return buatKuis(tokens[idx].content, md);
+      if (jenis === "jelajahi") return buatJelajahi(tokens[idx].content, md);
+      return fenceAsli(tokens, idx, options, env, self);
+    };
+  });
 
   // Daftar bab, diurutkan sesuai nomor bab.
   eleventyConfig.addCollection("bab", (api) =>

@@ -19,15 +19,19 @@ Cara kerjanya sederhana: kamu tinggal menarik (drag) blok perintah berwarna-warn
 
 ## B. Mengenal Kategori Blok di Scratch
 
-1. Gerakan (Motion) — biru: menggerakkan karakter, memutar arah
-
-2. Tampilan (Looks) — ungu: mengganti kostum, menampilkan ucapan
-
-3. Suara (Sound) — merah muda: memutar bunyi atau musik
-
-4. Kejadian (Events) — kuning: menentukan kapan program mulai berjalan, misalnya “ketika bendera hijau diklik”
-
-5. Kontrol (Control) — oranye: mengatur perulangan dan percabangan (jika/maka)
+```jelajahi
+Petunjuk: Ketuk setiap tombol (+) untuk mengenal 5 kategori blok di Scratch.
+# Gerakan
+**Motion — warna biru.** Menggerakkan karakter, memutar arah.
+# Tampilan
+**Looks — warna ungu.** Mengganti kostum, menampilkan ucapan.
+# Suara
+**Sound — warna merah muda.** Memutar bunyi atau musik.
+# Kejadian
+**Events — warna kuning.** Menentukan kapan program mulai berjalan, misalnya “ketika bendera hijau diklik”.
+# Kontrol
+**Control — warna oranye.** Mengatur perulangan dan percabangan (jika/maka).
+```
 
 ## C. Menghubungkan Blok Koding dengan Jenis Algoritma
 
@@ -74,6 +78,43 @@ Tujuan: kamu sedang berlatih membuat algoritma — menyusun perintah agar bisa d
 4. Tambahkan blok “jika ... maka ...” untuk membuat tokohmu bereaksi terhadap sesuatu (misalnya jika menyentuh tepi layar, maka berbalik arah).
 
 5. Presentasikan hasilnya di depan teman-teman!
+
+## Cek Pemahaman
+
+Jawab 3 pertanyaan berikut. Kamu langsung tahu jawabanmu benar atau belum.
+
+### Pertanyaan 1
+
+```kuis
+Pertanyaan: Blok “ketika bendera hijau diklik” menentukan kapan program mulai berjalan. Blok ini termasuk kategori …
+- Gerakan (biru)
+- Tampilan (ungu)
+* Kejadian (kuning)
+- Suara (merah muda)
+Penjelasan: Blok kategori Kejadian (Events) yang berwarna kuning menentukan kapan program mulai berjalan.
+```
+
+### Pertanyaan 2
+
+```kuis
+Pertanyaan: Karakter Rafi hanya bergerak sekali lalu berhenti, padahal Rafi ingin karakternya bergerak terus. Apa yang sebaiknya Rafi lakukan?
+* Membungkus blok gerak dengan blok “ulangi” atau “selamanya”
+- Menambahkan blok suara
+- Mengganti kostum karakter
+- Menghapus blok bendera hijau
+Penjelasan: Blok “ulangi” atau “selamanya” (kategori Kontrol) membuat blok di dalamnya dijalankan berkali-kali, sehingga karakter bergerak terus.
+```
+
+### Pertanyaan 3
+
+```kuis
+Pertanyaan: Blok “jika menyentuh tepi, maka berbalik arah” adalah contoh algoritma …
+- Sekuensial
+* Percabangan
+- Perulangan
+- Dekomposisi
+Penjelasan: Blok “jika … maka …” menjalankan perintah hanya ketika syaratnya terpenuhi. Itulah algoritma percabangan.
+```
 
 ## G. Latihan Soal 3
 
